@@ -1,144 +1,100 @@
-/* https://zellwk.com/blog/responsive-grid-system/ */
-/* line 12, C:/Users/nathan/Documents/jobhunt-2016/algolia/assets/scss/main.scss */
+/* Switch to box sizing */
+/* line 2, C:/Users/nathan/Documents/jobhunt-2016/algolia/assets/scss/main.scss */
 *, *:before, *:after {
   box-sizing: inherit; }
 
-/* line 16, C:/Users/nathan/Documents/jobhunt-2016/algolia/assets/scss/main.scss */
+/* line 6, C:/Users/nathan/Documents/jobhunt-2016/algolia/assets/scss/main.scss */
 html {
   box-sizing: border-box; }
 
-/* line 20, C:/Users/nathan/Documents/jobhunt-2016/algolia/assets/scss/main.scss */
+/* TODO: Consider moving to em/rem for better responsive font sizing */
+/* line 13, C:/Users/nathan/Documents/jobhunt-2016/algolia/assets/scss/main.scss */
 body {
   font-family: 'Open Sans', sans-serif;
   font-size: 13px;
   background-image: url("/resources/graphics/background_@2x.png"); }
 
-/* line 29, C:/Users/nathan/Documents/jobhunt-2016/algolia/assets/scss/main.scss */
+/* Root element in which we render React */
+/* line 22, C:/Users/nathan/Documents/jobhunt-2016/algolia/assets/scss/main.scss */
 .content {
   display: flex;
   justify-content: center; }
 
-/* line 35, C:/Users/nathan/Documents/jobhunt-2016/algolia/assets/scss/main.scss */
+/* Wraps all of the content of our app inside the content div 
+ * Columnar flex layout with a min height */
+/* line 30, C:/Users/nathan/Documents/jobhunt-2016/algolia/assets/scss/main.scss */
 .page-wrap {
-  display: flex;
-  flex-direction: column;
   background-color: white;
   box-shadow: 0 0 7px 2px #CCCCCC;
+  display: flex;
+  flex-direction: column;
   min-height: 500px; }
 
+/* Add side margins and set the width on larger screens */
 @media (min-width: 1000px) {
-  /* line 57, C:/Users/nathan/Documents/jobhunt-2016/algolia/assets/scss/main.scss */
+  /* line 40, C:/Users/nathan/Documents/jobhunt-2016/algolia/assets/scss/main.scss */
   .page-wrap {
     margin-left: auto;
     margin-right: auto;
     margin-top: 40px;
-    width: 90%;
-    max-width: 1500px; } }
+    max-width: 1500px;
+    width: 90%; } }
 
-/* line 73, C:/Users/nathan/Documents/jobhunt-2016/algolia/assets/scss/main.scss */
-.search-bar {
-  width: 100%;
-  display: flex; }
-
-/* line 79, C:/Users/nathan/Documents/jobhunt-2016/algolia/assets/scss/main.scss */
-.search {
+/* Could use a more descriptive name: the div containing the 
+ * filter and results panels */
+/* line 52, C:/Users/nathan/Documents/jobhunt-2016/algolia/assets/scss/main.scss */
+.main-section {
+  display: flex;
   flex: 1;
+  flex-direction: row; }
+
+/**** Search bar styles ****/
+/* Outer search bar container */
+/* line 61, C:/Users/nathan/Documents/jobhunt-2016/algolia/assets/scss/main.scss */
+.search-bar {
+  display: flex;
+  width: 100%; }
+
+/* line 66, C:/Users/nathan/Documents/jobhunt-2016/algolia/assets/scss/main.scss */
+.search {
   background-color: #1C688E;
+  flex: 1;
   padding: 20px; }
 
-/* line 85, C:/Users/nathan/Documents/jobhunt-2016/algolia/assets/scss/main.scss */
+/* Search bar input */
+/* line 73, C:/Users/nathan/Documents/jobhunt-2016/algolia/assets/scss/main.scss */
 .search input {
   width: 100%;
   height: 30px;
   border-style: solid;
   border-color: #D6D6D6;
   border-radius: 3px;
+  margin: 0px;
   font-size: 16px;
-  padding-left: 10px;
-  margin: 0px; }
+  padding-left: 10px; }
 
-/* line 97, C:/Users/nathan/Documents/jobhunt-2016/algolia/assets/scss/main.scss */
-.main-section {
-  flex: 1;
-  display: flex;
-  flex-direction: row; }
-
-/* line 103, C:/Users/nathan/Documents/jobhunt-2016/algolia/assets/scss/main.scss */
+/**** Filter panel styles ****/
+/* Filter panel container */
+/* line 88, C:/Users/nathan/Documents/jobhunt-2016/algolia/assets/scss/main.scss */
 .filter-panel {
   flex: 1;
-  width: 30%;
-  max-width: 30%;
-  padding: 20px;
   border-right: solid;
   border-color: #E6E6E6;
+  padding: 20px;
+  max-width: 30%;
+  width: 30%;
   min-height: 100%; }
 
-/* line 113, C:/Users/nathan/Documents/jobhunt-2016/algolia/assets/scss/main.scss */
-.results-panel {
-  display: flex;
-  width: 70%;
-  padding: 20px;
-  min-height: 100%;
-  flex-direction: column; }
-
-/* line 121, C:/Users/nathan/Documents/jobhunt-2016/algolia/assets/scss/main.scss */
-.results-list-panel {
-  display: flex;
-  flex-direction: column;
-  min-height: 80%; }
-
-/* line 127, C:/Users/nathan/Documents/jobhunt-2016/algolia/assets/scss/main.scss */
-.results-found-bar em {
-  font-weight: bold;
-  font-style: normal;
-  font-size: 16px; }
-
-/* line 137, C:/Users/nathan/Documents/jobhunt-2016/algolia/assets/scss/main.scss */
-.results-count:after {
-  content: "";
-  position: absolute;
-  height: 5px;
-  border-bottom: 1px solid #D6D6D6;
-  width: 35%;
-  height: 2%;
-  margin-left: 15px; }
-
-/* line 147, C:/Users/nathan/Documents/jobhunt-2016/algolia/assets/scss/main.scss */
-.show-more-bar {
-  display: flex;
-  flex: 1 0 auto;
-  justify-content: center; }
-
-/* line 153, C:/Users/nathan/Documents/jobhunt-2016/algolia/assets/scss/main.scss */
-.showMoreBtn {
-  position: relative;
-  top: 0;
-  color: #7F7F7F;
-  width: 170px;
-  height: 45px;
-  border-style: solid;
-  border-color: #E6E6E6;
-  background: #FFFFFF;
-  border-radius: 6px;
-  font-size: 16px; }
-
-/* line 166, C:/Users/nathan/Documents/jobhunt-2016/algolia/assets/scss/main.scss */
-.showMoreBtn:hover {
-  background: #2897C5;
-  color: white; }
-
-/* line 171, C:/Users/nathan/Documents/jobhunt-2016/algolia/assets/scss/main.scss */
-.showMoreBtn:active {
-  background: #1C688E; }
-
-/* line 178, C:/Users/nathan/Documents/jobhunt-2016/algolia/assets/scss/main.scss */
-.food-type-filter-item {
+/* line 102, C:/Users/nathan/Documents/jobhunt-2016/algolia/assets/scss/main.scss */
+.food-type-filter-item,
+.payment-option,
+.star-filter-item {
   padding-left: 15px;
   padding-right: 15px;
   padding-top: 2px;
   padding-bottom: 2px; }
 
-/* line 185, C:/Users/nathan/Documents/jobhunt-2016/algolia/assets/scss/main.scss */
+/* line 112, C:/Users/nathan/Documents/jobhunt-2016/algolia/assets/scss/main.scss */
 .food-type-filter-item:hover,
 .star-filter-item:hover,
 .payment-option:hover,
@@ -146,67 +102,134 @@ body {
   background: #2897C5;
   border-radius: 4px;
   cursor: pointer; }
+  /* line 120, C:/Users/nathan/Documents/jobhunt-2016/algolia/assets/scss/main.scss */
+  .food-type-filter-item:hover .cuisine-name,
+  .food-type-filter-item:hover .cuisine-filter-count,
+  .food-type-filter-item:hover .payment-option,
+  .star-filter-item:hover .cuisine-name,
+  .star-filter-item:hover .cuisine-filter-count,
+  .star-filter-item:hover .payment-option,
+  .payment-option:hover .cuisine-name,
+  .payment-option:hover .cuisine-filter-count,
+  .payment-option:hover .payment-option,
+  .selected-filter .cuisine-name,
+  .selected-filter .cuisine-filter-count,
+  .selected-filter .payment-option {
+    color: white; }
 
-/* line 194, C:/Users/nathan/Documents/jobhunt-2016/algolia/assets/scss/main.scss */
-.food-type-filter-item:hover .cuisine-name,
-.food-type-filter-item:hover .cuisine-filter-count,
-.payment-option:hover,
-.selected-filter .cuisine-name,
-.selected-filter .cuisine-filter-count,
-.selected-filter .payment-option {
-  color: white; }
-
-/* line 207, C:/Users/nathan/Documents/jobhunt-2016/algolia/assets/scss/main.scss */
+/* Cuisine type count */
+/* line 128, C:/Users/nathan/Documents/jobhunt-2016/algolia/assets/scss/main.scss */
 .cuisine-filter-count {
   float: right;
   color: #C7C7C7; }
 
-/* line 212, C:/Users/nathan/Documents/jobhunt-2016/algolia/assets/scss/main.scss */
-.payment-option,
-.star-filter-item {
-  padding-left: 15px;
-  padding-bottom: 5px; }
-
-/* line 218, C:/Users/nathan/Documents/jobhunt-2016/algolia/assets/scss/main.scss */
+/* line 133, C:/Users/nathan/Documents/jobhunt-2016/algolia/assets/scss/main.scss */
 .star-filter-item img {
   width: 25px; }
 
-/* line 222, C:/Users/nathan/Documents/jobhunt-2016/algolia/assets/scss/main.scss */
+/**** Search results panel styles ****/
+/* Results panel container */
+/* line 140, C:/Users/nathan/Documents/jobhunt-2016/algolia/assets/scss/main.scss */
+.results-panel {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  min-height: 100%;
+  width: 70%; }
+
+/* X results found text */
+/* line 149, C:/Users/nathan/Documents/jobhunt-2016/algolia/assets/scss/main.scss */
+.results-found-bar em {
+  font-weight: bold;
+  font-style: normal;
+  font-size: 16px; }
+
+/* Panel containing the vertical list of individual query results */
+/* line 156, C:/Users/nathan/Documents/jobhunt-2016/algolia/assets/scss/main.scss */
+.results-list-panel {
+  display: flex;
+  flex-direction: column;
+  min-height: 80%; }
+
+/* Draw the dividing line to the right of the results found text;
+ * somewhat of a hack; would love suggetions for improvement */
+/* line 164, C:/Users/nathan/Documents/jobhunt-2016/algolia/assets/scss/main.scss */
+.results-count:after {
+  content: "";
+  position: absolute;
+  border-bottom: 1px solid #D6D6D6;
+  width: 35%;
+  height: 2%;
+  margin-left: 15px; }
+
+/* line 174, C:/Users/nathan/Documents/jobhunt-2016/algolia/assets/scss/main.scss */
+.show-more-bar {
+  display: flex;
+  flex: 1 0 auto;
+  justify-content: center; }
+
+/* line 180, C:/Users/nathan/Documents/jobhunt-2016/algolia/assets/scss/main.scss */
+.showMoreBtn {
+  position: relative;
+  top: 0;
+  width: 170px;
+  height: 45px;
+  background: #FFFFFF;
+  color: #7F7F7F;
+  border-style: solid;
+  border-color: #E6E6E6;
+  border-radius: 6px;
+  font-size: 16px; }
+
+/* line 193, C:/Users/nathan/Documents/jobhunt-2016/algolia/assets/scss/main.scss */
+.showMoreBtn:hover {
+  background: #2897C5;
+  color: white; }
+
+/* line 198, C:/Users/nathan/Documents/jobhunt-2016/algolia/assets/scss/main.scss */
+.showMoreBtn:active {
+  background: #1C688E; }
+
+/* Container panel for a single search result.
+ * flex layout in a row */
+/* line 204, C:/Users/nathan/Documents/jobhunt-2016/algolia/assets/scss/main.scss */
 .search-result {
   display: flex;
   flex-direction: row;
   padding-top: 25px; }
 
-/* line 228, C:/Users/nathan/Documents/jobhunt-2016/algolia/assets/scss/main.scss */
+/* line 210, C:/Users/nathan/Documents/jobhunt-2016/algolia/assets/scss/main.scss */
 .search-result img {
   width: 100px;
   height: 100px;
   border-radius: 4px; }
 
-/* line 234, C:/Users/nathan/Documents/jobhunt-2016/algolia/assets/scss/main.scss */
+/* Container for the text on the right side of a search-result panel */
+/* line 217, C:/Users/nathan/Documents/jobhunt-2016/algolia/assets/scss/main.scss */
 .result-details {
   padding-left: 25px;
   vertical-align: top; }
 
-/* line 239, C:/Users/nathan/Documents/jobhunt-2016/algolia/assets/scss/main.scss */
+/* line 222, C:/Users/nathan/Documents/jobhunt-2016/algolia/assets/scss/main.scss */
 .result-details h4 {
   margin-top: 0px;
   font-size: 20px;
   font-weight: bold; }
 
-/* line 245, C:/Users/nathan/Documents/jobhunt-2016/algolia/assets/scss/main.scss */
+/* line 228, C:/Users/nathan/Documents/jobhunt-2016/algolia/assets/scss/main.scss */
 .star-count {
   font-size: 18px;
   color: #FFAB66; }
 
-/* line 250, C:/Users/nathan/Documents/jobhunt-2016/algolia/assets/scss/main.scss */
+/* line 235, C:/Users/nathan/Documents/jobhunt-2016/algolia/assets/scss/main.scss */
 .reviews-count {
-  font-size: 18px;
+  font-size: 16px;
   color: #ABABAB; }
 
-/* line 255, C:/Users/nathan/Documents/jobhunt-2016/algolia/assets/scss/main.scss */
+/* Could use a better name. The location, cuisine type, and price text in a searhc-result */
+/* line 241, C:/Users/nathan/Documents/jobhunt-2016/algolia/assets/scss/main.scss */
 .result-info-subtitle {
-  font-size: 18px;
+  font-size: 16px;
   color: #ABABAB; }
 
 /*# sourceMappingURL=../../scss */
