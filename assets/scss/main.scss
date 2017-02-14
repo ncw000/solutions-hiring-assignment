@@ -13,7 +13,9 @@ $base-font-size: 13px;
 body {
   font-family: 'Open Sans', sans-serif;
   font-size: $base-font-size;
-  background-image: url('/resources/graphics/background_2x.png');
+  /* For some reason a relative image path is leading to the file when I push via gh-pages.
+   * Truly bizarre, need to investigate. Short on time at the moment, so this is a quick fix */
+  background-image: url('https://raw.githubusercontent.com/ncw000/solutions-hiring-assignment/gh-pages/resources/graphics/background_2X.png');
 }
 
 $side-padding: 20px;
