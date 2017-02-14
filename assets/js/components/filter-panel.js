@@ -16,18 +16,14 @@ class FilterPanel extends React.Component {
             selectedPayment: -1,
             // The counts of search results for the listed cuisine types
             counts: {
-                'Italian': 0,
-                'American': 0,
-                'Californian': 0,
-                'French': 0,
-                'Seafood': 0,
-                'Japanese': 0,
-                'Indian': 0,
-            }
+                '': 0
+            },
+            isExpanded: false
         }
         this.handleCuisineFilter = this.handleCuisineFilter.bind(this);
         this.handleRatingFilter = this.handleRatingFilter.bind(this);
         this.handlePaymentFilter = this.handlePaymentFilter.bind(this);
+        this.toggleCuisineList = this.toggleCuisineList.bind(this);
     }
 
     // The following three handler functions are called when one of the filter buttons are clicked.
@@ -69,25 +65,31 @@ class FilterPanel extends React.Component {
         });
     }
 
-    render() {
-        // Names of the cusines listed as filters.
-        // TODO: Abstract out to remove redundency with the intial state of this.state.counts
-        const cuisineNames = [
-            'Italian',
-            'American',
-            'Californian',
-            'French',
-            'Seafood',
-            'Japanese',
-            'Indian',
-        ];
+    toggleCuisineList() {
+        this.setState({isExpanded: !this.state.isExpanded});
+    }
 
+    render() {
         // Generate FoodTypeFilter buttons for each of the above cuisine names
         let cuisines = [];
+
+        let cuisineNames = Object.keys(this.props.counts).sort();
+
         for (var i = 0; i < cuisineNames.length; i++) {
+            var cuisineName = cuisineNames[i];
+            let count = this.props.counts[cuisineName];
+            // Whether or not this button is currently selected
+            let isSelected = i == this.state.selectedCuisine ? true : false;
+
+            cuisines.push(<FoodTypeFilter onFilter={this.handleCuisineFilter} 
+                            key={i} itemIndex={i} name={cuisineName} count={count} 
+                            isSelected={isSelected}/>);
+        }
+
+        for (var i = 0; i < this.props.counts.length; i++) {
             let count = 0;
             let name = cuisineNames[i];
-            // Whether or not this button is currenlty selected
+            // Whether or not this button is currently selected
             let isSelected = i == this.state.selectedCuisine ? true : false;
 
             // Set the query results counter
@@ -116,16 +118,32 @@ class FilterPanel extends React.Component {
             'MasterCard'
         ];
 
+        let paymentOptionsFilters = [
+            ['AMEX'],
+            ['Visa'],
+            ['Discover'],
+            ['MasterCard', 'Diners Club', 'Carte Blanche']
+        ]
+
+
         for (var i = 0; i < paymentOptionsText.length; i++) {
             let isSelected = i == this.state.selectedPayment ? true : false;
             paymentOptions.push(<PaymentFilter onFilter={this.handlePaymentFilter}
-                                    key={i} itemIndex={i} optionText={paymentOptionsText[i]}
+                                    key={i} itemIndex={i} 
+                                    optionText={paymentOptionsText[i]} optionFilter={paymentOptionsFilters[i]}
                                     option={i} isSelected={isSelected} />);
         }
 
+        let expansionText = this.state.isExpanded ? '[-]' : '[+]';
+        let expansionClass = this.state.isExpanded ? '' : 'hiddenCuisineList';
+
         return <section className="filter-panel">
-                <h4>Cuisine/Food Type</h4>
-                {cuisines}
+                <span className="cuisinePanelHeader" onClick={this.toggleCuisineList}>
+                    <h4>Cuisine/Food Type</h4>&nbsp;{expansionText}
+                </span>
+                <div className={expansionClass} >
+                    {cuisines}
+                </div>
                 <h4>Rating</h4>
                 {ratings}
                 <h4>Payment Options</h4>

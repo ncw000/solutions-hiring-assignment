@@ -9,7 +9,14 @@ class PaymentFilter extends React.Component {
     
     // Apply the payment_option filter for Algolia filter search
     applyFilter() {
-        this.props.onFilter(this.props.itemIndex, `payment_options:\"${this.props.optionText}\"`)
+        let filterText = this.props.optionFilter.map(option => {
+            return `payment_options:\"${option}\"`
+        })
+
+        filterText = '(' + filterText.join(' OR ') + ')';
+
+        // this.props.optionFilter.join(' OR ');
+        this.props.onFilter(this.props.itemIndex, filterText);
     }
 
     render() {
