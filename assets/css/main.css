@@ -12,7 +12,7 @@ html {
 body {
   font-family: 'Open Sans', sans-serif;
   font-size: 13px;
-  background-image: url("https://ncw000.github.io/solutions-hiring-assignment/resources/graphics/background_2x.png"); }
+  background-image: url("https://raw.githubusercontent.com/ncw000/solutions-hiring-assignment/gh-pages/resources/graphics/background_2X.png"); }
 
 /* Root element in which we render React */
 /* line 22, C:/Users/nathan/Documents/jobhunt-2016/algolia-github/assets/scss/main.scss */
