@@ -124,6 +124,18 @@ $filter-item-padding: 15px;
   }
 }
 
+.cuisinePanelHeader {
+  display: flex;
+  align-items: center;
+  cursor:pointer;
+  font-size: $base-font-size+3;
+}
+
+/* Hides the cuisine list when the food type panel is collapsed */
+.hiddenCuisineList {
+  display: none;
+}
+
 /* Cuisine type count */
 .cuisine-filter-count {
   float: right;

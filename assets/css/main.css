@@ -12,7 +12,7 @@ html {
 body {
   font-family: 'Open Sans', sans-serif;
   font-size: 13px;
-  background-image: url("https://raw.githubusercontent.com/ncw000/solutions-hiring-assignment/gh-pages/resources/graphics/background_2X.png"); }
+  background-image: url("/resources/graphics/background_2x.png"); }
 
 /* Root element in which we render React */
 /* line 22, C:/Users/nathan/Documents/jobhunt-2016/algolia-github/assets/scss/main.scss */
@@ -117,19 +117,31 @@ body {
   .selected-filter .payment-option {
     color: white; }
 
+/* line 127, C:/Users/nathan/Documents/jobhunt-2016/algolia-github/assets/scss/main.scss */
+.cuisinePanelHeader {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-size: 16px; }
+
+/* Hides the cuisine list when the food type panel is collapsed */
+/* line 135, C:/Users/nathan/Documents/jobhunt-2016/algolia-github/assets/scss/main.scss */
+.hiddenCuisineList {
+  display: none; }
+
 /* Cuisine type count */
-/* line 128, C:/Users/nathan/Documents/jobhunt-2016/algolia-github/assets/scss/main.scss */
+/* line 140, C:/Users/nathan/Documents/jobhunt-2016/algolia-github/assets/scss/main.scss */
 .cuisine-filter-count {
   float: right;
   color: #C7C7C7; }
 
-/* line 133, C:/Users/nathan/Documents/jobhunt-2016/algolia-github/assets/scss/main.scss */
+/* line 145, C:/Users/nathan/Documents/jobhunt-2016/algolia-github/assets/scss/main.scss */
 .star-filter-item img {
   width: 25px; }
 
 /**** Search results panel styles ****/
 /* Results panel container */
-/* line 140, C:/Users/nathan/Documents/jobhunt-2016/algolia-github/assets/scss/main.scss */
+/* line 152, C:/Users/nathan/Documents/jobhunt-2016/algolia-github/assets/scss/main.scss */
 .results-panel {
   display: flex;
   flex-direction: column;
@@ -138,14 +150,14 @@ body {
   width: 70%; }
 
 /* X results found text */
-/* line 149, C:/Users/nathan/Documents/jobhunt-2016/algolia-github/assets/scss/main.scss */
+/* line 161, C:/Users/nathan/Documents/jobhunt-2016/algolia-github/assets/scss/main.scss */
 .results-found-bar em {
   font-weight: bold;
   font-style: normal;
   font-size: 16px; }
 
 /* Panel containing the vertical list of individual query results */
-/* line 156, C:/Users/nathan/Documents/jobhunt-2016/algolia-github/assets/scss/main.scss */
+/* line 168, C:/Users/nathan/Documents/jobhunt-2016/algolia-github/assets/scss/main.scss */
 .results-list-panel {
   display: flex;
   flex-direction: column;
@@ -153,7 +165,7 @@ body {
 
 /* Draw the dividing line to the right of the results found text;
  * somewhat of a hack; would love suggetions for improvement */
-/* line 164, C:/Users/nathan/Documents/jobhunt-2016/algolia-github/assets/scss/main.scss */
+/* line 176, C:/Users/nathan/Documents/jobhunt-2016/algolia-github/assets/scss/main.scss */
 .results-count:after {
   content: "";
   position: absolute;
@@ -162,13 +174,13 @@ body {
   height: 2%;
   margin-left: 15px; }
 
-/* line 174, C:/Users/nathan/Documents/jobhunt-2016/algolia-github/assets/scss/main.scss */
+/* line 186, C:/Users/nathan/Documents/jobhunt-2016/algolia-github/assets/scss/main.scss */
 .show-more-bar {
   display: flex;
   flex: 1 0 auto;
   justify-content: center; }
 
-/* line 180, C:/Users/nathan/Documents/jobhunt-2016/algolia-github/assets/scss/main.scss */
+/* line 192, C:/Users/nathan/Documents/jobhunt-2016/algolia-github/assets/scss/main.scss */
 .showMoreBtn {
   position: relative;
   top: 0;
@@ -181,53 +193,53 @@ body {
   border-radius: 6px;
   font-size: 16px; }
 
-/* line 193, C:/Users/nathan/Documents/jobhunt-2016/algolia-github/assets/scss/main.scss */
+/* line 205, C:/Users/nathan/Documents/jobhunt-2016/algolia-github/assets/scss/main.scss */
 .showMoreBtn:hover {
   background: #2897C5;
   color: white; }
 
-/* line 198, C:/Users/nathan/Documents/jobhunt-2016/algolia-github/assets/scss/main.scss */
+/* line 210, C:/Users/nathan/Documents/jobhunt-2016/algolia-github/assets/scss/main.scss */
 .showMoreBtn:active {
   background: #1C688E; }
 
 /* Container panel for a single search result.
  * flex layout in a row */
-/* line 204, C:/Users/nathan/Documents/jobhunt-2016/algolia-github/assets/scss/main.scss */
+/* line 216, C:/Users/nathan/Documents/jobhunt-2016/algolia-github/assets/scss/main.scss */
 .search-result {
   display: flex;
   flex-direction: row;
   padding-top: 25px; }
 
-/* line 210, C:/Users/nathan/Documents/jobhunt-2016/algolia-github/assets/scss/main.scss */
+/* line 222, C:/Users/nathan/Documents/jobhunt-2016/algolia-github/assets/scss/main.scss */
 .search-result img {
   width: 100px;
   height: 100px;
   border-radius: 4px; }
 
 /* Container for the text on the right side of a search-result panel */
-/* line 217, C:/Users/nathan/Documents/jobhunt-2016/algolia-github/assets/scss/main.scss */
+/* line 229, C:/Users/nathan/Documents/jobhunt-2016/algolia-github/assets/scss/main.scss */
 .result-details {
   padding-left: 25px;
   vertical-align: top; }
 
-/* line 222, C:/Users/nathan/Documents/jobhunt-2016/algolia-github/assets/scss/main.scss */
+/* line 234, C:/Users/nathan/Documents/jobhunt-2016/algolia-github/assets/scss/main.scss */
 .result-details h4 {
   margin-top: 0px;
   font-size: 20px;
   font-weight: bold; }
 
-/* line 228, C:/Users/nathan/Documents/jobhunt-2016/algolia-github/assets/scss/main.scss */
+/* line 240, C:/Users/nathan/Documents/jobhunt-2016/algolia-github/assets/scss/main.scss */
 .star-count {
   font-size: 18px;
   color: #FFAB66; }
 
-/* line 235, C:/Users/nathan/Documents/jobhunt-2016/algolia-github/assets/scss/main.scss */
+/* line 247, C:/Users/nathan/Documents/jobhunt-2016/algolia-github/assets/scss/main.scss */
 .reviews-count {
   font-size: 16px;
   color: #ABABAB; }
 
 /* Could use a better name. The location, cuisine type, and price text in a searhc-result */
-/* line 241, C:/Users/nathan/Documents/jobhunt-2016/algolia-github/assets/scss/main.scss */
+/* line 253, C:/Users/nathan/Documents/jobhunt-2016/algolia-github/assets/scss/main.scss */
 .result-info-subtitle {
   font-size: 16px;
   color: #ABABAB; }
