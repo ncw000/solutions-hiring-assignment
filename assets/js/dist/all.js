@@ -165,6 +165,9 @@ var App = function (_React$Component) {
 
             // Query Algolia and process results in a promise resolution
             return index.search(this.state.queryText, searchOptions).then(function success(results) {
+                if (pageNumber > results.page) {
+                    return;
+                }
                 // Determine how many pages of data we've loaded thus far, and the total set of results now displayed.
                 // displayedResults = results for previously queried pages (if any) + the current page
                 var pagesLoaded = 0;
@@ -172,7 +175,7 @@ var App = function (_React$Component) {
 
                 // If a page number was given, then the user clicked 'Show More' and has thus already loaded the previous pages.
                 if (pageNumber !== undefined) {
-                    pagesLoaded = pageNumber; // Note 0-based indexing for pages in Algolia queries
+                    pagesLoaded = pageNumber + 1; // Note 0-based indexing for pages in Algolia queries
                     displayedResults = that.state.displayedResults.concat(results.hits);
                 } else {
                     // Otherwise, we're doing a brand new search and are only showing the first page
@@ -335,7 +338,6 @@ var FilterPanel = function (_React$Component) {
             // Three index values to indicate which (if any) of the cuisine, rating, or payment
             // options are currently selected
             selectedCuisine: -1,
-            selectedRating: -1,
             selectedPayment: -1,
             // The counts of search results for the listed cuisine types
             counts: {
@@ -373,22 +375,12 @@ var FilterPanel = function (_React$Component) {
     }, {
         key: 'handleRatingFilter',
         value: function handleRatingFilter(index, filter) {
-            var _this3 = this;
-
-            var newSelection = index;
-            if (this.state.selectedRating == index) {
-                newSelection = -1;
-                filter = "";
-            }
-
-            this.setState({ selectedRating: newSelection }, function () {
-                _this3.props.onRatingFilter(filter);
-            });
+            this.props.onRatingFilter(filter);
         }
     }, {
         key: 'handlePaymentFilter',
         value: function handlePaymentFilter(index, filter) {
-            var _this4 = this;
+            var _this3 = this;
 
             var newSelection = index;
             if (this.state.selectedPayment == index) {
@@ -397,7 +389,7 @@ var FilterPanel = function (_React$Component) {
             }
 
             this.setState({ selectedPayment: newSelection }, function () {
-                _this4.props.onPaymentFilter(filter);
+                _this3.props.onPaymentFilter(filter);
             });
         }
     }, {
@@ -424,29 +416,6 @@ var FilterPanel = function (_React$Component) {
                     isSelected: isSelected }));
             }
 
-            for (var i = 0; i < this.props.counts.length; i++) {
-                var _count = 0;
-                var name = cuisineNames[i];
-                // Whether or not this button is currently selected
-                var _isSelected = i == this.state.selectedCuisine ? true : false;
-
-                // Set the query results counter
-                if (this.props.counts) {
-                    _count = this.props.counts[name]; // this.state.counts[name];
-                }
-
-                cuisines.push(_react2.default.createElement(_foodTypeFilter.FoodTypeFilter, { onFilter: this.handleCuisineFilter,
-                    key: i, itemIndex: i, name: name, count: _count, isSelected: _isSelected }));
-            }
-
-            // Generate buttons to select by rating star count
-            var ratings = [];
-            for (var i = 0; i <= 5; i++) {
-                var _isSelected2 = i == this.state.selectedRating ? true : false;
-                ratings.push(_react2.default.createElement(_starFilter.StarFilter, { onFilter: this.handleRatingFilter,
-                    key: i, itemIndex: i, rating: i, isSelected: _isSelected2 }));
-            }
-
             // Generate buttons to select by payment option count
             var paymentOptions = [];
             var paymentOptionsText = ['AMEX', 'Visa', 'Discover', 'MasterCard'];
@@ -454,11 +423,11 @@ var FilterPanel = function (_React$Component) {
             var paymentOptionsFilters = [['AMEX'], ['Visa'], ['Discover'], ['MasterCard', 'Diners Club', 'Carte Blanche']];
 
             for (var i = 0; i < paymentOptionsText.length; i++) {
-                var _isSelected3 = i == this.state.selectedPayment ? true : false;
+                var _isSelected = i == this.state.selectedPayment ? true : false;
                 paymentOptions.push(_react2.default.createElement(_paymentFilter.PaymentFilter, { onFilter: this.handlePaymentFilter,
                     key: i, itemIndex: i,
                     optionText: paymentOptionsText[i], optionFilter: paymentOptionsFilters[i],
-                    option: i, isSelected: _isSelected3 }));
+                    option: i, isSelected: _isSelected }));
             }
 
             var expansionText = this.state.isExpanded ? '[-]' : '[+]';
@@ -488,7 +457,8 @@ var FilterPanel = function (_React$Component) {
                     null,
                     'Rating'
                 ),
-                ratings,
+                _react2.default.createElement(_starFilter.StarFilter, { onFilter: this.handleRatingFilter,
+                    itemIndex: 0, rating: 6 }),
                 _react2.default.createElement(
                     'h4',
                     null,
@@ -915,18 +885,74 @@ var StarFilter = function (_React$Component) {
 
         var _this = _possibleConstructorReturn(this, (StarFilter.__proto__ || Object.getPrototypeOf(StarFilter)).call(this, props));
 
+        _this.state = {
+            ratingLocked: false,
+            selectedRating: 0,
+            hoveredRating: 0
+        };
+        _this.handleStarClicked = _this.handleStarClicked.bind(_this);
+        _this.handleStarMouseOver = _this.handleStarMouseOver.bind(_this);
+        _this.handleStarMouseLeave = _this.handleStarMouseLeave.bind(_this);
         _this.applyFilter = _this.applyFilter.bind(_this);
         return _this;
     }
 
-    // Generate the Algolia query filter string to show results with the same number of stars (or more)
-    // as the rating for this filter
-
-
     _createClass(StarFilter, [{
+        key: "handleStarClicked",
+        value: function handleStarClicked(e) {
+            var _this2 = this;
+
+            // If you click the star we've already locked in to, unselect ratings
+            // and re-filter
+            if (this.state.hoveredRating == this.state.selectedRating) {
+                this.setState({
+                    selectedRating: 0,
+                    hoveredRating: 0,
+                    ratingLocked: false
+                }, function () {
+                    _this2.applyFilter();
+                });
+            }
+            // Otherwise, lock in the current star as the new rating, and re-filter
+            else {
+                    this.setState({
+                        selectedRating: this.state.hoveredRating,
+                        ratingLocked: true
+                    }, function () {
+                        _this2.applyFilter();
+                    });
+                }
+
+            // if (rating != this.state.selectedRating) {
+            //     this.setState({ratingLocked: true}, () => {
+            //         this.applyFilter();
+            //     });
+            // } else {
+            //     this.setState({ratingLocked: false});
+            // }
+        }
+    }, {
+        key: "handleStarMouseOver",
+        value: function handleStarMouseOver(e) {
+            // Get the star id stored in the data-id attribute
+            // corresponds to the # of stars lit, ranging from 0 to 6
+            var rating = e.target.dataset.id;
+            this.setState({ hoveredRating: rating });
+        }
+    }, {
+        key: "handleStarMouseLeave",
+        value: function handleStarMouseLeave(e) {
+            this.setState({ hoveredRating: this.state.selectedRating });
+        }
+
+        // Generate the Algolia query filter string to show results with the same number of stars (or more)
+        // as the rating for this filter
+
+    }, {
         key: "applyFilter",
         value: function applyFilter() {
-            this.props.onFilter(this.props.itemIndex, "stars_count>=" + this.props.rating);
+            this.props.onFilter(this.props.itemIndex, "stars_count>=" + this.state.selectedRating);
+            console.log(this.state.selectedRating);
         }
     }, {
         key: "render",
@@ -934,23 +960,30 @@ var StarFilter = function (_React$Component) {
             // Generate the css class for this item, using selected-filter if this element has
             // been selected with a click.
             var filterClass = "star-filter-item";
-            if (this.props.isSelected) filterClass += " selected-filter";
+            // if (this.props.isSelected) filterClass += " selected-filter";
 
             // Append gold or gray star images to this element until we have the correct # of gold
             // stars to indicate the correct rating
             // TODO: It's fairly strange to generate this. I've not had time to piece together unique
             // star-bars for each rating, but that would likely be a better approach over this method.
             var stars = [];
-            for (var i = 0; i < this.props.rating; i++) {
-                stars.push(_react2.default.createElement("img", { key: i, src: "resources/graphics/stars-plain.png" }));
-            }
-            for (var i = this.props.rating; i < 5; i++) {
-                stars.push(_react2.default.createElement("img", { key: i, src: "resources/graphics/star-empty.png" }));
+            for (var i = 0; i < 6; i++) {
+                var starPath = "";
+                // Choose the empty or gold colored star based on the currently selected rating.
+                if (i >= this.state.hoveredRating) {
+                    starPath = "resources/graphics/star-empty.png";
+                } else {
+                    starPath = "resources/graphics/stars-plain.png";
+                }
+                stars.push(_react2.default.createElement("img", { "data-id": i + 1,
+                    onClick: this.handleStarClicked,
+                    onMouseOver: this.handleStarMouseOver, onMouseLeave: this.handleStarMouseLeave,
+                    key: i, src: starPath }));
             }
 
             return _react2.default.createElement(
                 "div",
-                { onClick: this.applyFilter, className: filterClass },
+                { className: filterClass },
                 stars
             );
         }

@@ -12,7 +12,6 @@ class FilterPanel extends React.Component {
             // Three index values to indicate which (if any) of the cuisine, rating, or payment
             // options are currently selected
             selectedCuisine: -1,
-            selectedRating: -1,
             selectedPayment: -1,
             // The counts of search results for the listed cuisine types
             counts: {
@@ -42,15 +41,7 @@ class FilterPanel extends React.Component {
     }
 
     handleRatingFilter(index, filter) {
-        let newSelection = index;
-        if (this.state.selectedRating == index) {
-            newSelection = -1;
-            filter = "";
-        }
-
-        this.setState({selectedRating: newSelection}, () => {
-            this.props.onRatingFilter(filter);
-        });
+        this.props.onRatingFilter(filter);
     }
 
     handlePaymentFilter(index, filter) {
@@ -84,29 +75,6 @@ class FilterPanel extends React.Component {
             cuisines.push(<FoodTypeFilter onFilter={this.handleCuisineFilter} 
                             key={i} itemIndex={i} name={cuisineName} count={count} 
                             isSelected={isSelected}/>);
-        }
-
-        for (var i = 0; i < this.props.counts.length; i++) {
-            let count = 0;
-            let name = cuisineNames[i];
-            // Whether or not this button is currently selected
-            let isSelected = i == this.state.selectedCuisine ? true : false;
-
-            // Set the query results counter
-            if (this.props.counts) {
-                count = this.props.counts[name]; // this.state.counts[name];
-            }
-
-            cuisines.push(<FoodTypeFilter onFilter={this.handleCuisineFilter} 
-                            key={i} itemIndex={i} name={name} count={count} isSelected={isSelected}/>);
-        }
-
-        // Generate buttons to select by rating star count
-        let ratings = [];
-        for (var i = 0; i <= 5; i++) {
-            let isSelected = i == this.state.selectedRating ? true : false;
-            ratings.push(<StarFilter onFilter={this.handleRatingFilter}
-                            key={i} itemIndex={i} rating={i} isSelected={isSelected} />);
         }
 
         // Generate buttons to select by payment option count
@@ -145,7 +113,8 @@ class FilterPanel extends React.Component {
                     {cuisines}
                 </div>
                 <h4>Rating</h4>
-                {ratings}
+                <StarFilter onFilter={this.handleRatingFilter}
+                    itemIndex={0} rating={6} />
                 <h4>Payment Options</h4>
                 {paymentOptions}
             </section>

@@ -122,6 +122,9 @@ class App extends React.Component {
         // Query Algolia and process results in a promise resolution
         return index.search(this.state.queryText, searchOptions)
         .then(function success(results) {
+            if (pageNumber > results.page) { 
+                return
+            }
             // Determine how many pages of data we've loaded thus far, and the total set of results now displayed.
             // displayedResults = results for previously queried pages (if any) + the current page
             let pagesLoaded = 0;
@@ -129,7 +132,7 @@ class App extends React.Component {
 
             // If a page number was given, then the user clicked 'Show More' and has thus already loaded the previous pages.
             if (pageNumber !== undefined) {
-                pagesLoaded = pageNumber; // Note 0-based indexing for pages in Algolia queries
+                pagesLoaded = pageNumber+1; // Note 0-based indexing for pages in Algolia queries
                 displayedResults = that.state.displayedResults.concat(results.hits);
             } else {
                 // Otherwise, we're doing a brand new search and are only showing the first page

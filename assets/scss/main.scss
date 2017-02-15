@@ -110,9 +110,12 @@ $filter-item-padding: 15px;
   padding-bottom: 2px;
 }
 
+.star-filter-item:hover {
+  cursor: pointer;
+}
+
 // Filter item highlight and selection style
 .food-type-filter-item:hover,
-.star-filter-item:hover,
 .payment-option:hover,
 .selected-filter {
   background: #2897C5;
